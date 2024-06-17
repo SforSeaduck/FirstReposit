@@ -3,7 +3,7 @@ footer = header
 symbol = '*' * 10
 print(header)
 print(header)
-dish_name = input('Enter a dish name: ')
+dish_name = input('Enter dish name: ')
 recipe = input('Enter a recipe name what you like: ')
 counter_of_meat = recipe.count('meat')
 
