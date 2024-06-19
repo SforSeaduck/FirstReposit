@@ -1,6 +1,5 @@
 from pywebio.output import *
 from pywebio.input import input as input_pw, select, slider, radio
-from pywebio.session import set_env
 
 username = input_pw("Введіть ваше ім'я:", type='text')
 film_name = input_pw("Введіть назву фільму:", type='text')
@@ -14,5 +13,5 @@ recommend = radio("Чи рекомендуєте ви цей фільм інши
 reviews_info = [username, film_name, genre, review, rating, emotions, recommend]
 if rating > 7:
     put_text("Ви дали високий рейтинг цьому фільму! Дякуємо за відгук!")
+pass
 
-set_env(output_animation=True)
