@@ -1,18 +1,37 @@
-from pywebio.output import *
-from pywebio.input import input as input_pw, select, slider, radio
-from pywebio.session import set_env
+from pywebio import start_server
+from pywebio.input import input, select, textarea, slider, radio
+from pywebio.output import put_text, put_markdown, put_buttons, clear
+import time
 
-username = input_pw("Введіть ваше ім'я:", type='text')
-film_name = input_pw("Введіть назву фільму:", type='text')
-genre = select('Виберіть жанр фільму:', options=['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi'])
-review = input_pw('Напишіть короткий відгук про фільм:')
-rating = slider("Встановіть рейтинг фільму (від 1 до 10):", min=1, max=10, step=1, value=5)
-emotions = select("Виберіть ваші емоції після перегляду фільму:",
-                  options=['Захоплення', 'Сміх', 'Враження', 'Страх', 'Розчарування'])
-recommend = radio("Чи рекомендуєте ви цей фільм іншим?", options=['Так', 'Ні'])
+reviews_info = []
 
-reviews_info = [username, film_name, genre, review, rating, emotions, recommend]
-if rating > 7:
-    put_text("Ви дали високий рейтинг цьому фільму! Дякуємо за відгук!")
+def main():
 
-set_env(output_animation=True)
+    name = input("Введіть ваше ім'я:", type="text")
+    movie_title = input("Введіть назву фільму:", type="text")
+    genre = select("Виберіть жанр фільму:", options=["Бойовик", "Комедія", "Екшн", "Жахи", "Триллер", "horror"])
+    review = textarea("Введіть короткий відгук про фільм:")
+    rating = slider("Оцініть фільм від 1 до 10:", min_value=1, max_value=10)
+    emotions = select("Які ваші емоції після перегляду фільму?", options=["Задоволений", "Розчарований", "Вражений", "Здивований"])
+    recommend = radio("Чи рекомендуєте ви цей фільм іншим?", options=["Так", "Ні"])
+
+    reviews_info.append({
+        "name": name,
+        "movie_title": movie_title,
+        "genre": genre,
+        "review": review,
+        "rating": rating,
+        "emotions": emotions,
+        "recommend": recommend
+    })
+
+    if rating >= 8:
+        put_text(f"Дякуємо за ваш відгук, {name}! Ваша оцінка фільму '{movie_title}' дуже висока!")
+    else:
+        put_text(f"Дякуємо за ваш відгук, {name}! Ваша оцінка фільму '{movie_title}'")
+
+    time.sleep(4)
+    clear()
+
+if __name__ == '__main__':
+    start_server(main, port=8080)
